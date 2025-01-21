@@ -22,8 +22,8 @@ Lista de Tareas
 
             <?php 
             if(isset($validation)){ ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= $validation->getError()?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $validation->listErrors() ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <?php } ?>
@@ -35,13 +35,11 @@ Lista de Tareas
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" readonly disabled class="form-control" id="email" name="email" value="<?= old('email', $user['email']) ?>">
-                    <small class="text-danger"><?= isset($validation) ? $validation->getError('email')  : '' ?></small>
+                    <input type="email" readonly disabled class="form-control" id="email" name="email" value="<?= old('email', $user['email']) ?>">                    
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                    <small class="text-danger"><?= isset($validation) ? $validation->getError('password')  : '' ?></small>
+                    <input type="password" class="form-control" id="password" name="password">                   
                 </div>
                 <button type="submit" class="btn btn-success">
                     <i class="fa-solid fa-check"></i>
