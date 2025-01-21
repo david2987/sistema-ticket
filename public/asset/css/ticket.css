@@ -1,0 +1,23 @@
+
+
+body {
+  display: flex;
+  align-items: center;  
+  background-image: url('../img/login.jpg');
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;    
+  text-align: center;
+}
+
+.userProfile{
+    margin-right: 10%;
+}
+
+.userProfile li:hover{
+   background-color: transparent;
+}
