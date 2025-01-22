@@ -22,6 +22,7 @@ class TaskController extends BaseController
 
         // Obtener el término de búsqueda (si existe)
         $search = $this->request->getGet('search');
+        $status = $this->request->getGet('status');
 
         // Configurar la consulta para la búsqueda y la paginación
         $query = $taskModel->where('user_id', $userId);
@@ -29,6 +30,10 @@ class TaskController extends BaseController
         if ($search) {
             $query = $taskModel->like('title', $search)
                 ->orLike('description', $search)->where('user_id', $userId);
+        }
+
+        if($status){
+            $query = $query->where('status',$status)->where('user_id', $userId);
         }
         
 
@@ -40,6 +45,7 @@ class TaskController extends BaseController
             'tasks' => $tasks,
             'pager' => $taskModel->pager, // Paginador de CodeIgniter
             'search' => $search, // Retornar el término de búsqueda
+            'status' => $status
         ]);
 
         return view('tasks/index', compact('tasks', 'pager'));

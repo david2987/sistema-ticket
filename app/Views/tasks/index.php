@@ -16,11 +16,11 @@ Lista de Tareas
             <input type="text" name="search" class="form-control" placeholder="Buscar tareas..." value="<?= esc($search) ?>">
         </div>
         <div class="col-3">
-            <select class="form-select" id="status" aria-label="Estados" onkeyup="filterTasks()">
+            <select class="form-select" id="status" name="status" aria-label="Estados" >
                 <option value="">Todos</option>
-                <option value="pendiente">PENDIENTE</option>
-                <option value="en progreso">EN PROGRESO</option>
-                <option value="completado">COMPLETADO</option>
+                <option <?= isset($status) && $status =='pendiente'?'selected':'' ?>  value="pendiente">PENDIENTE</option>
+                <option <?= isset($status) && $status =='en progreso'?'selected':'' ?> value="en progreso">EN PROGRESO</option>
+                <option <?= isset($status) && $status =='completado'?'selected':'' ?> value="completado">COMPLETADO</option>
             </select>
 
         </div>
@@ -90,7 +90,7 @@ Lista de Tareas
     </table>
     <!-- Paginación -->
     <div class="d-flex justify-content-center">
-        <?= $pager->links() ?>
+        <?= isset($pager)?$pager->links():'' ?>
     </div>
 </div>
 

@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $this->renderSection('title') ?></title>
+    <title>Sistema de Gestion de Ticket</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url('asset/css/ticket.css'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -23,26 +24,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link active " aria-current="page" href="#">
-                                <i class="fa-solid fa-gauge"></i>
-                                Dashboard</a>
-                        </li>
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">                    
                         <li class="nav-item">
                         <li class="nav-item"><a class="nav-link " href="/tasks">
                                 <i class="fa-solid fa-clipboard-list"></i>
                                 Tareas</a></li>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="/profile/<?= session()->get('userId') ?>" >
-                                <i class="fa-solid fa-user"></i>
-                                Usuarios</a></li>
-                        </li>
+                       
 
-                        <li class="nav-item"><a class="nav-link " href="/tasks">
-                                <i class="fa-solid fa-list"></i>
-                                Categorias</a></li>
-                        </li>
+                       
 
                     </ul>
                     <ul class="navbar-nav ms-auto userProfile ">
@@ -52,7 +42,7 @@
                             </a>
                             <ul class="dropdown-menu bg-dark ">
                                 <li class="dropdown-item">
-                                    <a class="nav-link" href="/auth:">
+                                    <a class="nav-link" href="/profile/<?= session()->get('userId') ?>">
                                         <i class="fa-solid fa-user"></i>
                                         Perfil
                                     </a>
@@ -79,7 +69,7 @@
 
             <!-- Footer -->
             <footer class="text-center mt-4 footer">
-                <p>&copy; <?= date('Y') ?> Mi Aplicación. Todos los derechos reservados.</p>
+                <p>&copy; <?= date('Y') ?> Sistema de Tickets . Todos los derechos reservados.</p>
             </footer>
         </div>
 

@@ -68,8 +68,13 @@ body {
   color: var(--bs-pagination-hover-color);
   background-color: var(--bs-pagination-hover-bg);
   border-color: var(--bs-pagination-hover-border-color);
+}
+
+.pagination  > .active{
+  background-color: #fff ;
 
 }
+
 
 .pagination li a{
   text-decoration: none;
