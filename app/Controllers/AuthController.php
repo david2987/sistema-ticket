@@ -121,7 +121,7 @@ class AuthController extends BaseController
             $session->set('userName', $user['username']); // También puedes guardar otros datos del usuario
 
 
-            return redirect()->to('/dashboard')->with('token', $jwt);
+            return redirect()->to('/tasks')->with('token', $jwt);
         }
 
         return view('auth/login');

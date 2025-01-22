@@ -18,8 +18,29 @@ class TaskController extends BaseController
     public function index()
     {
         $taskModel = new TaskModel();
-        $tasks = $taskModel->where('user_id', session('userId'))->paginate(5); // Paginación de 5 registros
-        $pager = $taskModel->pager;
+        $userId = session()->get('userId'); // ID del usuario autenticado
+
+        // Obtener el término de búsqueda (si existe)
+        $search = $this->request->getGet('search');
+
+        // Configurar la consulta para la búsqueda y la paginación
+        $query = $taskModel->where('user_id', $userId);
+        
+        if ($search) {
+            $query = $taskModel->like('title', $search)
+                ->orLike('description', $search)->where('user_id', $userId);
+        }
+        
+
+        // Obtener los resultados con paginación
+        $tasks = $query->paginate(10); // 10 registros por página
+
+        // Pasar los datos a la vista
+        return view('tasks/index', [
+            'tasks' => $tasks,
+            'pager' => $taskModel->pager, // Paginador de CodeIgniter
+            'search' => $search, // Retornar el término de búsqueda
+        ]);
 
         return view('tasks/index', compact('tasks', 'pager'));
     }
@@ -97,7 +118,7 @@ class TaskController extends BaseController
         if (!$task) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Tarea no encontrada.');
         }
-        
+
         return view('tasks/view', compact('task'));
     }
 

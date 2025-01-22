@@ -8,25 +8,32 @@ Lista de Tareas
 
 <h1 class="mb-4 mt-5">Ticket</h1>
 
-<div class="mb-3  d-flex gap-3">
-    <div class="col-3">
-        <input type="text" id="search" class="form-control" placeholder="Buscar tareas..." onkeyup="filterTasks()">
+
+
+<form method="get" action="<?= base_url('tasks') ?>" class="mb-3">
+    <div class="mb-3  d-flex gap-3">
+        <div class="col-3">
+            <input type="text" name="search" class="form-control" placeholder="Buscar tareas..." value="<?= esc($search) ?>">
+        </div>
+        <div class="col-3">
+            <select class="form-select" id="status" aria-label="Estados" onkeyup="filterTasks()">
+                <option value="">Todos</option>
+                <option value="pendiente">PENDIENTE</option>
+                <option value="en progreso">EN PROGRESO</option>
+                <option value="completado">COMPLETADO</option>
+            </select>
+
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="/tasks/create" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+                Crear Ticket
+            </a>
+        </div>
     </div>
-    <div class="col-3">
-        <select class="form-select" id="status"   aria-label="Estados" onkeyup="filterTasks()">        
-        <option value="">Todos</option>
-            <option value="pendiente">PENDIENTE</option>
-            <option value="en progreso">EN PROGRESO</option>
-            <option value="completado">COMPLETADO</option>
-        </select>
-    </div>
-    <div class="col-3">
-        <a href="/tasks/create" class="btn btn-success">
-            <i class="fa-solid fa-plus"></i>
-            Crear Ticket
-        </a>
-    </div>
-</div>
+</form>
+
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
@@ -81,26 +88,22 @@ Lista de Tareas
             <?php endforeach; ?>
         </tbody>
     </table>
+    <!-- Paginación -->
+    <div class="d-flex justify-content-center">
+        <?= $pager->links() ?>
+    </div>
 </div>
 
 <script>
-    function filterTasks() {
-        let input = document.getElementById('search').value.toLowerCase();
-        let rows = document.getElementById('tasksTable').getElementsByTagName('tr');
+    // Filtro de tareas en tiempo real
+    document.querySelector('input[name="search"]').addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#taskTable tr');
 
-        for (let i = 0; i < rows.length; i++) {
-            let cells = rows[i].getElementsByTagName('td');
-            let match = false;
-
-            for (let j = 0; j < cells.length - 1; j++) {
-                if (cells[j].textContent.toLowerCase().includes(input)) {
-                    match = true;
-                    break;
-                }
-            }
-
-            rows[i].style.display = match ? '' : 'none';
-        }
-    }
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(term) ? '' : 'none';
+        });
+    });
 </script>
 <?= $this->endSection() ?>
