@@ -1,68 +1,126 @@
-# CodeIgniter 4 Application Starter
+# Aplicación de Gestión de Tareas
 
-## What is CodeIgniter?
+Este proyecto es una aplicación web desarrollada en PHP para la gestión de tareas personales. Permite a los usuarios registrarse, iniciar sesión y realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre una lista de tareas, garantizando la seguridad y la correcta gestión de la información.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Características
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+*   **Gestión de Usuarios:**
+    *   Registro de nuevos usuarios.
+    *   Inicio de sesión con generación de token JWT.
+    *   Renovación de sesión configurable.
+*   **Gestión de Tareas:**
+    *   Creación de tareas con título, descripción, fecha de vencimiento y estado.
+    *   Lectura de todas las tareas del usuario autenticado.
+    *   Actualización de tareas específicas.
+    *   Eliminación de tareas específicas.
+*   **Autenticación y Autorización:**
+    *   Protección de rutas con autenticación JWT.
+    *   Autorización para que los usuarios solo gestionen sus propias tareas.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Tecnologías Utilizadas
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+*   PHP 8+
+*   Composer (para gestión de dependencias)
+*   MySQL (o SQLite)
+*   `firebase/php-jwt` (u otra librería JWT)
 
-## Installation & updates
+## Requisitos
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+*   PHP 8+ instalado.
+*   Composer instalado.
+*   Servidor web (Apache, Nginx, etc.).
+*   Base de datos MySQL (o SQLite).
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Instalación
 
-## Setup
+1.  Clonar el repositorio:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+    ```bash
+    git clone https://github.com/david2987/sistema-ticket.git    ```
 
-## Important Change with index.php
+2.  Navegar al directorio del proyecto:
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+    ```bash
+    cd task-manager
+    ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+3.  Instalar las dependencias con Composer:
 
-**Please** read the user guide for a better explanation of how CI4 works!
+    ```bash
+    composer install
+    ```
 
-## Repository Management
+4.  Configurar la base de datos:
+    *   Crear una base de datos en MySQL (o crear el archivo de base de datos SQLite).
+    *   Copiar el archivo `.env.example` a `.env` y configurar las variables de entorno, incluyendo la conexión a la base de datos. Ejemplo:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+        ```
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=tasks
+        DB_USERNAME= usuario
+        DB_PASSWORD= contraseña
+        JWT_SECRET=tu_clave_secreta_jwt
+        JWT_LIFETIME=3600 #tiempo de vida del token en segundos
+        ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+5.  Ejecutar las migraciones (si utilizas migraciones):
 
-## Server Requirements
+    ```bash
+    php artisan migrate
+    ```
+    *(Ajusta este comando si no usas un framework como Laravel)*
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+## Estructura del Proyecto
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+El proyecto sigue una estructura MVC (Modelo-Vista-Controlador) para una mejor organización:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+*   `app/`: Contiene la lógica de la aplicación.
+    *   `Controllers/`: Controladores que manejan las solicitudes.
+    *   `Models/`: Modelos que interactúan con la base de datos.
+*   `config/`: Archivos de configuración.
+*   `database/`: Archivos relacionados con la base de datos.
+*   `routes/`: Rutas de la aplicación.
+*   `public/`: Archivos públicos (CSS, JavaScript, imágenes).
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Endpoints de la API
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+**Autenticación (AuthController)**
+
+`GET /register`: Mostrar el formulario de registro. (Método: GET)
+`POST /register`: Procesar el registro de un nuevo usuario. (Método: POST)
+`GET /login`: Mostrar el formulario de inicio de sesión. (Método: GET)
+`POST /login`: Procesar el inicio de sesión del usuario. (Método: POST)
+`GET /logout`: Cerrar la sesión del usuario. (Método: GET)
+`GET /profile/(:num)` : Mostrar el perfil de un usuario específico (donde :num es el ID del usuario). (Método: GET)
+`POST /profile/(:num)`  : Actualizar el perfil de un usuario específico (donde :num es el ID del usuario). (Método: POST)
+
+**Gestión de Tareas (TaskController) - Rutas protegidas por el filtro 'auth'**
+
+`GET /tasks`: Obtener todas las tareas del usuario autenticado. (Método: GET)
+`GET /tasks/create`: Mostrar el formulario para crear una nueva tarea. (Método: GET)
+`POST /tasks/create`: Procesar la creación de una nueva tarea. (Método: POST)
+`GET /tasks/view/(:num)`: Mostrar una tarea específica (donde :num es el ID de la tarea). (Método: GET)
+`GET /tasks/edit/(:num)`: Mostrar el formulario para editar una tarea específica (donde :num es el ID de la tarea). (Método: GET)
+`POST /tasks/edit/(:num)`: Procesar la edición de una tarea específica (donde :num es el ID de la tarea). (Método: POST)
+`GET /tasks/delete/(:num)`: Eliminar una tarea específica (donde :num es el ID de la tarea). (Método: GET)
+
+
+## Seguridad
+
+*   Las contraseñas se almacenan con hash utilizando `password_hash`.
+*   Se realiza validación de entrada para prevenir inyección SQL.
+*   Se sanitizan los datos de entrada/salida para prevenir XSS.
+
+
+## Próximas Mejoras
+
+*   Implementación de pruebas unitarias.
+*   Mejoras en la interfaz de usuario (si aplica).
+*   Paginación de tareas.
+
+## Autor
+
+David Ezequiel Grant    
+

@@ -25,7 +25,7 @@
             <?= csrf_field() ?>
             <div class="d-grid mb-4 text-center">
                 <div><i class="fa-solid fa-ticket fa-6x"></i></div>
-                <div class="fw-bold fs-2 text">Sistema de Ticket</div>
+                <div class="fw-bold fs-2 text">Sistema de Tareas</div>
             </div>
             <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
             <div class="form-floating">

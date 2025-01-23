@@ -16,11 +16,6 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->post('/login', 'AuthController::login');
 
 
-
-
-
-
-
 $routes->group('tasks', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'TaskController::index');
     $routes->get('create', 'TaskController::create');
