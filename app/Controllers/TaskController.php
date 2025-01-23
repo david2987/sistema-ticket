@@ -55,11 +55,13 @@ class TaskController extends BaseController
     {
         helper(['form']);
         if ($this->request->getMethod() === 'POST') {
+                        
+
             $rules = [
                 'title' => 'required|min_length[3]|max_length[255]',
                 'description' => 'required',
                 'due_date' => 'required|valid_date',
-                'status' => 'required|in_list[pending,in_progress,completed]',
+                'status' => 'required|in_list[pendiente,en progreso,completado]',
             ];
 
             if (!$this->validate($rules)) {
@@ -74,8 +76,8 @@ class TaskController extends BaseController
                 'due_date' => $this->request->getPost('due_date'),
                 'status' => $this->request->getPost('status'),
             ]);
-
-            return redirect()->to('/tasks')->with('success', 'Tarea creada exitosamente.');
+         
+            return view('tasks/create', ['success' => 'Tarea creada exitosamente.']);            
         }
 
         return view('tasks/create');
@@ -95,7 +97,7 @@ class TaskController extends BaseController
                 'title' => 'required|min_length[3]|max_length[255]',
                 'description' => 'required',
                 'due_date' => 'required|valid_date',
-                'status' => 'required|in_list[pending,in_progress,completed]',
+                'status' => 'required|in_list[pendiente,en progreso,completado]',
             ];
 
             if (!$this->validate($rules)) {
@@ -109,7 +111,7 @@ class TaskController extends BaseController
                 'status' => $this->request->getPost('status'),
             ]);
 
-            return redirect()->to('/tasks')->with('success', 'Tarea actualizada exitosamente.');
+            return view('tasks/edit', [ 'task' => $task ,  'success' => 'Tarea editada exitosamente.']);            
         }
 
         return view('tasks/edit', compact('task'));

@@ -10,7 +10,21 @@ Crear Nueva Tarea
 <div class="table-responsive">
     <form action="/tasks/create" method="post">
         <?= csrf_field() ?>
+        <?php
+        if (isset($success)) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $success ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php } ?>
 
+        <?php
+        if (isset($validation)) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= $validation->listErrors() ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php } ?>
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -36,10 +50,10 @@ Crear Nueva Tarea
         </div>
 
         <button type="submit" class="btn btn-success">
-        <i class="fa-solid fa-check"></i>
+            <i class="fa-solid fa-check"></i>
             Crear</button>
         <a href="/tasks" class="btn btn-secondary">
-        <i class="fa-solid fa-left-long"></i>
+            <i class="fa-solid fa-left-long"></i>
             Volver</a>
     </form>
 </div>

@@ -27,11 +27,14 @@ class AuthController extends BaseController
                 return view('auth/register', ['validation' => $this->validator]);
             }
 
+            // obtiene el password
+            $password = $this->request->getPost('password');
+
             $userModel = new UserModel();
             $userModel->save([
                 'username' => $this->request->getPost('username'),
                 'email' => $this->request->getPost('email'),
-                'password' => $this->request->getPost('password'),
+                'password' => password_hash($password,PASSWORD_BCRYPT),
             ]);
 
 
@@ -65,10 +68,12 @@ class AuthController extends BaseController
             if (!$this->validate($rules)) {
                 return view('auth/profile', ['validation' => $this->validator, 'user' => $user]);
             }
+            // obtiene el password
+            $password = $this->request->getPost('password');
             
             $userModel->update($id,[
                 'username' => $this->request->getPost('username'),                
-                'password' => $this->request->getPost('password'),
+                'password' => password_hash($password,PASSWORD_BCRYPT),
             ]);
 
 
@@ -98,7 +103,9 @@ class AuthController extends BaseController
             $userModel = new UserModel();
             $user = $userModel->where('email', $this->request->getPost('email'))->first();
 
-            if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
+            $hash = password_hash($this->request->getPost('password'),PASSWORD_BCRYPT);
+
+            if (!$user || !password_verify($this->request->getPost('password'),$hash )) {
                 return view('auth/login', ['error' => 'Error de Usuario / Contraseña']);
             }
 

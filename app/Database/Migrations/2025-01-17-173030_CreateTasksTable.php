@@ -14,7 +14,7 @@ class CreateTasksTable extends Migration
             'title' => ['type' => 'VARCHAR', 'constraint' => '255'],
             'description' => ['type' => 'TEXT'],
             'due_date' => ['type' => 'DATETIME'],
-            'status' => ['type' => 'ENUM', 'constraint' => ['pending', 'in_progress', 'completed'], 'default' => 'pending'],
+            'status' => ['type' => 'ENUM', 'constraint' => ['pendiente', 'en progreso', 'completado'], 'default' => 'pendiente'],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
         ]);

@@ -9,33 +9,45 @@ Crear Nueva Tarea
 
 <form action="/tasks/edit/<?= $task['id'] ?>" method="post">
     <?= csrf_field() ?>
+    <?php
+    if (isset($success)) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $success ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php } ?>
+
+    <?php
+    if (isset($validation)) { ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= $validation->listErrors() ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php } ?>
 
     <div class="mb-3">
         <label for="title" class="form-label">Título</label>
         <input type="text" class="form-control" id="title" name="title" value="<?= old('title', $task['title']) ?>" required>
-        <small class="text-danger"><?= isset($validation) ? $validation->getError('title') : '' ?></small>
+
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Descripción</label>
         <textarea class="form-control" id="description" name="description" rows="4" required><?= old('description', $task['description']) ?></textarea>
-        <small class="text-danger"><?= isset($validation) ? $validation->getError('description') : '' ?></small>
     </div>
 
     <div class="mb-3">
         <label for="due_date" class="form-label">Fecha de Vencimiento</label>
         <input type="date" class="form-control" id="due_date" name="due_date" value="<?= old('due_date', $task['due_date']) ?>" required>
-        <small class="text-danger"><?= isset($validation) ? $validation->getError('due_date') : '' ?></small>
     </div>
 
     <div class="mb-3">
         <label for="status" class="form-label">Estado</label>
         <select class="form-select" id="status" name="status" required>
-            <option value="pending" <?= old('status', $task['status']) === 'pending' ? 'selected' : '' ?>>Pendiente</option>
-            <option value="in_progress" <?= old('status', $task['status']) === 'in_progress' ? 'selected' : '' ?>>En Progreso</option>
-            <option value="completed" <?= old('status', $task['status']) === 'completed' ? 'selected' : '' ?>>Completada</option>
+            <option value="pendiente" <?= old('status', $task['status']) === 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+            <option value="en progreso" <?= old('status', $task['status']) === 'en progreso' ? 'selected' : '' ?>>En Progreso</option>
+            <option value="completado" <?= old('status', $task['status']) === 'completado' ? 'selected' : '' ?>>Completada</option>
         </select>
-        <small class="text-danger"><?= isset($validation) ? $validation->getError('status') : '' ?></small>
     </div>
 
     <button type="submit" class="btn btn-success">

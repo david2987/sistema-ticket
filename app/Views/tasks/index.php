@@ -9,6 +9,14 @@ Lista de Tareas
 <h1 class="mb-4 mt-5">Ticket</h1>
 
 
+<?php
+
+if (isset($success)) { ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= $success ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php } ?>
 
 <form method="get" action="<?= base_url('tasks') ?>" class="mb-3">
     <div class="mb-3  d-flex gap-3">
@@ -16,11 +24,11 @@ Lista de Tareas
             <input type="text" name="search" class="form-control" placeholder="Buscar tareas..." value="<?= esc($search) ?>">
         </div>
         <div class="col-3">
-            <select class="form-select" id="status" name="status" aria-label="Estados" >
-                <option value="">Todos</option>
-                <option <?= isset($status) && $status =='pendiente'?'selected':'' ?>  value="pendiente">PENDIENTE</option>
-                <option <?= isset($status) && $status =='en progreso'?'selected':'' ?> value="en progreso">EN PROGRESO</option>
-                <option <?= isset($status) && $status =='completado'?'selected':'' ?> value="completado">COMPLETADO</option>
+            <select class="form-select" id="status" name="status" aria-label="Estados">
+                <option value="">Todos los estados </option>
+                <option <?= isset($status) && $status == 'pendiente' ? 'selected' : '' ?> value="pendiente">PENDIENTE</option>
+                <option <?= isset($status) && $status == 'en progreso' ? 'selected' : '' ?> value="en progreso">EN PROGRESO</option>
+                <option <?= isset($status) && $status == 'completado' ? 'selected' : '' ?> value="completado">COMPLETADO</option>
             </select>
 
         </div>
@@ -90,7 +98,7 @@ Lista de Tareas
     </table>
     <!-- Paginación -->
     <div class="d-flex justify-content-center">
-        <?= isset($pager)?$pager->links():'' ?>
+        <?= isset($pager) ? $pager->links() : '' ?>
     </div>
 </div>
 
