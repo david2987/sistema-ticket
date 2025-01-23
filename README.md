@@ -31,6 +31,9 @@ Este proyecto es una aplicación web desarrollada en PHP para la gestión de tar
 *   Servidor web (Apache, Nginx, etc.).
 *   Base de datos MySQL (o SQLite).
 
+## Desarrollo 
+*   Se desarrollo con el framework Codeigniter 4.5  que utiliza PHP 8.1 y una base de datos mysql. 
+
 ## Instalación
 
 1.  Clonar el repositorio:
@@ -51,26 +54,47 @@ Este proyecto es una aplicación web desarrollada en PHP para la gestión de tar
     ```
 
 4.  Configurar la base de datos:
+    *   ir a /app/Config/Database.php
     *   Crear una base de datos en MySQL (o crear el archivo de base de datos SQLite).
     *   Copiar el archivo `.env.example` a `.env` y configurar las variables de entorno, incluyendo la conexión a la base de datos. Ejemplo:
 
         ```
+        database.default.hostname = localhost
+        database.default.database = tasks
+        database.default.username = usuario
+        database.default.password = contraseña
+        database.default.DBDriver = MySQLi
+        database.default.DBPrefix =
+        database.default.port = 3306
+        JWT_SECRET=tu_clave_secreta_jwt        
+        JWT_LIFETIME=3600 #tiempo de vida del token en segundos
+
         DB_CONNECTION=mysql
         DB_HOST=127.0.0.1
         DB_PORT=3306
         DB_DATABASE=tasks
         DB_USERNAME= usuario
         DB_PASSWORD= contraseña
-        JWT_SECRET=tu_clave_secreta_jwt
-        JWT_LIFETIME=3600 #tiempo de vida del token en segundos
+        
         ```
+5. Configurar Ruta de acceso 
+
+*    ir a /app/Config/App.php
+*    public string $baseURL = 'http://localhost:8080/';
 
 5.  Ejecutar las migraciones (si utilizas migraciones):
 
     ```bash
-    php artisan migrate
+    php spark migrate
     ```
-    *(Ajusta este comando si no usas un framework como Laravel)*
+  
+  
+5.  Ejecutar las migraciones (si utilizas migraciones):
+
+    ```bash
+    php spark serve
+    ```
+  
 
 ## Estructura del Proyecto
 
